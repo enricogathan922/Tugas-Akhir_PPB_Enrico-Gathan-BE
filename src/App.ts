@@ -8,11 +8,7 @@ import express, {
 import indexRoutes from "./routes/index.route";
 import cors from "cors";
 
-const allowedOrigins = [
-  "https://tugas-akhir-ppb-enrico-gathan.vercel.app",
-  "https://example.com",
-  "http://localhost:5173",
-];
+
 
 
 export class App {
@@ -30,22 +26,34 @@ export class App {
   }
 
   private initializeMiddleware(): void {
-    this.app.use(
-      cors({
-        origin: function (origin, callback) {
-          if (!origin) return callback(null, true);
-          if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
-          }
-          return callback(new Error("Not allowed by CORS"));
-        },
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-      })
-    );
+
+    const allowedOrigins = [
+      "https://tugas-akhir-ppb-enrico-gathan.vercel.app",
+      "https://tugas-akhir-ppb-enrico-gathan-be.vercel.app",
+      "http://localhost:5173",
+    ];
+
+    this.app.use((req, res, next) => {
+      const origin = req.headers.origin;
+
+      if (origin && allowedOrigins.includes(origin)) {
+        res.header("Access-Control-Allow-Origin", origin);
+      }
+
+      res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+      res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+      res.header("Access-Control-Allow-Credentials", "true");
+
+      if (req.method === "OPTIONS") {
+        return res.sendStatus(200);
+      }
+
+      next();
+    });
 
     this.app.use(express.json());
   }
+
 
   private initializeRoutes(): void {
     this.app.get("/", (req: Request, res: Response) => {
