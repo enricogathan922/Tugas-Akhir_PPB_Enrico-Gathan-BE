@@ -27,31 +27,10 @@ export class App {
   }
 
   private initializeMiddleware(): void {
-
-    const allowedOrigins = [
-      "https://tugas-akhir-ppb-enrico-gathan.vercel.app",
-      "https://tugas-akhir-ppb-enrico-gathan-be.vercel.app",
-      "http://localhost:5173",
-    ];
-
-    this.app.use((req, res, next) => {
-      const origin = req.headers.origin;
-
-      if (origin && allowedOrigins.includes(origin)) {
-        res.header("Access-Control-Allow-Origin", origin);
-      }
-
-      res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-      res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-      res.header("Access-Control-Allow-Credentials", "true");
-
-      if (req.method === "OPTIONS") {
-        return res.sendStatus(200);
-      }
-
-      next();
-    });
-
+    this.app.use(cors({
+      origin: "*",
+      credentials: true,
+    }));
     this.app.use(express.json());
   }
 
