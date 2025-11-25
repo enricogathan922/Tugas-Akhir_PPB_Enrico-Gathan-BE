@@ -28,6 +28,9 @@ export class AuthController extends BaseController {
 
     private async register(req: Request, res: Response) {
         try {
+            if (req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
+
+
             const { name, email, password } = req.body;
 
             if (!name || !email || !password) {
@@ -44,6 +47,8 @@ export class AuthController extends BaseController {
 
     private async login(req: Request, res: Response) {
         try {
+            if (req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
+
             const { email, password } = req.body;
 
             if (!email || !password) {
