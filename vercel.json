@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "dist/index.js",
+            "src": "*.js",
             "use": "@vercel/node"
         }
     ],
@@ -21,7 +21,7 @@
             "headers": {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+                "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
             }
         }
     ]

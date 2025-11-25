@@ -11,6 +11,7 @@ class App {
     constructor(port) {
         this.app = (0, express_1.default)();
         this.port = port;
+        console.log('created application');
         this.initializeMiddleware();
         this.initializeRoutes();
         this.initializeNotFoundHandler();
@@ -18,11 +19,13 @@ class App {
     }
     initializeMiddleware() {
         this.app.use((0, cors_1.default)({
-            origin: "http://localhost:5173",
-            methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            allowedHeaders: ["Content-Type", "Authorization"],
+            origin: "*",
+            credentials: true,
         }));
         this.app.use(express_1.default.json());
+    }
+    getApp() {
+        return this.app;
     }
     initializeRoutes() {
         this.app.get("/", (req, res) => {

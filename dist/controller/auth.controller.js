@@ -35,6 +35,9 @@ class AuthController extends base_controller_1.BaseController {
         });
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (req.method === 'OPTIONS') {
+                    return res.status(200).json(({ body: "OK" }));
+                }
                 const { name, email, password } = req.body;
                 if (!name || !email || !password) {
                     return _super.error.call(this, res, "All fields are required");
@@ -50,6 +53,9 @@ class AuthController extends base_controller_1.BaseController {
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (req.method === 'OPTIONS') {
+                    return res.status(200).json(({ body: "OK" }));
+                }
                 const { email, password } = req.body;
                 if (!email || !password) {
                     return this.error(res, "Email and password are required");
