@@ -18,6 +18,7 @@ export class App {
   constructor(port: number) {
     this.app = express();
     this.port = port;
+    console.log('created application')
 
     this.initializeMiddleware();
     this.initializeRoutes();
@@ -52,6 +53,12 @@ export class App {
     });
 
     this.app.use(express.json());
+  }
+
+
+
+  public getApp() {
+    return this.app;
   }
 
 
